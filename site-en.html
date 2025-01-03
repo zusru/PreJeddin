@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Jeddin</title>
+	<style>
+		/* إعدادات الصفحة */
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			overflow-x: hidden;
+			overflow-y: auto;
+		}
+
+		body {
+			font-family: Arial, sans-serif;
+			background: url('img/BackGround1.png') no-repeat center top;
+			/* تحديد الصورة وموقعها */
+			background-attachment: fixed;
+			/* جعل الصورة ثابتة أثناء التمرير */
+			background-size: cover;
+			/* تغطي الصورة الشاشة بالكامل */
+			background-position: center top;
+			/* بداية الصورة من أعلى الصفحة */
+			color: white;
+			position: relative;
+		}
+
+		/* الرأس */
+		header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 10px 20px;
+			background-color: rgba(0, 0, 0, 0.5);
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			/* اجعل العرض 100% */
+			z-index: 1000;
+			height: auto;
+			min-height: 45px;
+			border-radius: 0;
+			/* يمكن إزالة الحدود إذا لم تكن ضرورية */
+			box-sizing: border-box;
+			/* تأكد من تضمين الحواف الداخلية */
+		}
+
+
+
+		header img {
+			height: 40px;
+		}
+
+		header nav {
+			font-size: 16px;
+		}
+
+		/* تحديد لون الروابط في الشريط العلوي */
+		header nav a {
+			color: white;
+			text-decoration: none;
+			margin-left: 10px;
+		}
+
+		/* تغيير لون الرابط عند التمرير */
+		header nav a:hover {
+			color: white;
+		}
+
+		/* النصوص الرئيسية */
+		.main-content {
+			text-align: center;
+			margin-top: 70px;
+			position: relative;
+			z-index: 4;
+			padding: 20px;
+			width: 90%;
+			max-width: 800px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		.main-content h1 {
+			font-size: clamp(24px, 5vw, 36px);
+			margin-bottom: 10px;
+			line-height: 1.3;
+		}
+
+		.main-content p {
+			font-size: clamp(16px, 3vw, 18px);
+			margin-bottom: 20px;
+			line-height: 1.5;
+		}
+
+		/* الزر */
+		.main-content .button {
+			padding: 10px 35px;
+			background-color: #cc2936;
+			color: white;
+			text-decoration: none;
+			font-size: 24px;
+			/* Increased from default 16px */
+			transition: all 0.3s ease;
+			display: inline-block;
+			cursor: pointer;
+			position: relative;
+			z-index: 10000;
+			/* جعل الزر في الطبقة العليا */
+
+		}
+
+		.main-content .button:hover {
+			background-color: #e63946;
+			transform: scale(1.05);
+		}
+
+		/* تعديل تصميم .logo-container ليظهر الشعار بشكل صحيح */
+		.logo-container {
+			display: flex;
+			justify-content: center;
+			margin-bottom: 20px;
+			/* المسافة بين الشعار والنص */
+		}
+
+		.logo-container img {
+			width: min(250px, 80vw);
+			/* تعيين عرض الصورة */
+			height: auto;
+			/* تعيين الارتفاع تلقائي */
+		}
+
+		.logo {
+			position: relative;
+			top: -50px;
+			/* Adjust this value to move the image up or down */
+		}
+
+		/* صورة Backk */
+		.backk-image1 {
+			position: absolute;
+			top: 0;
+			left: 10%;
+			width: 80%;
+			height: 125vh;
+			background: url('img/Backk.png') no-repeat center center/cover;
+			opacity: 0.8;
+			z-index: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			/* Increased from 20px */
+
+		}
+
+		/* صورة Backk2 */
+		.backk-image2 {
+			position: absolute;
+			top: 25vh;
+			/* Changed from 25vh to move it down */
+			left: 10%;
+			width: 80%;
+			height: 125vh;
+			background: url('img/Backk.png') no-repeat center center/cover;
+			opacity: 0.8;
+			z-index: 1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			/* Increased from 20px */
+		}
+
+		.backk-image2 .main-content {
+			display: flex;
+			width: 100%;
+			flex-direction: column;
+			gap: 20px;
+		}
+
+		.left-content {
+			width: 100%;
+			text-align: left;
+			padding: 10px;
+			font-size: 36px;
+		}
+
+		.right-content {
+			width: 100%;
+			padding: 10px;
+			line-height: 1.4;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+
+		.right-content p {
+			font-size: clamp(16px, 4vw, 25px);
+			position: static;
+			font-weight: bold;
+		}
+
+		.second-section {
+			margin-top: 100vh;
+		}
+
+		.left-content h1 {
+			font-size: clamp(60px, 15vw, 130px);
+			text-align: center;
+			line-height: 1.2;
+			position: static;
+			margin: 20px 0;
+			/* Changed from 20px to 60px */
+			transform: none;
+			left: 0;
+		}
+
+		/* الصورة lang-img */
+		.lang-img {
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			height: 250px;
+		}
+
+		/* Add media queries for better control */
+		@media screen and (max-width: 768px) {
+
+			.backk-image1,
+			.backk-image2 {
+				width: 100%;
+				left: 0;
+			}
+
+			.lang-img {
+				height: 150px;
+			}
+
+			.main-content {
+				margin-top: 50px;
+			}
+
+			.button {
+				padding: 15px 25px;
+				font-size: 14px;
+			}
+
+			.social-buttons a img {
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
+			}
+
+			.social-buttons a img:hover {
+				transform: scale(1.2);
+				box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+			}
+
+		}
+
+		.social-icons {
+			display: flex;
+			justify-content: center;
+			/* Centers horizontally */
+			align-items: center;
+			/* Centers vertically */
+			width: 100%;
+			margin-top: 20px;
+		}
+
+		.social-icons a {
+			color: black;
+			font-size: 3rem;
+			/* Increase icon size */
+			margin: 0 15px;
+			/* Add some spacing between icons */
+			transition: transform 0.3s ease;
+		}
+
+		.social-icons a:hover {
+			transform: scale(1.2);
+			/* Slight zoom effect on hover */
+		}
+
+		.label {
+			display: none;
+		}
+
+		@font-face {
+			font-family: 'Norwester';
+			src: url('fonts/norwester.otf') format('opentype');
+		}
+
+		h1,
+		.who-text,
+		.button {
+			font-family: 'Norwester', sans-serif;
+		}
+
+		@font-face {
+			font-family: 'Sprite-Graffiti';
+			src: url('fonts/Sprite-Graffiti.otf') format('opentype');
+		}
+
+		.graffiti-text {
+			font-family: 'Sprite-Graffiti', sans-serif;
+		}
+
+		@font-face {
+			font-family: 'Agrandir-Tight';
+			src: url('fonts/agrandir-tight.otf') format('opentype');
+		}
+
+		.agrandir-text {
+			font-family: 'Agrandir-Tight', sans-serif !important;
+		}
+
+		/* WHO ARE WE? text */
+		.left-content h1.who-text {
+			line-height: 1.19;
+			position: relative;
+			z-index: 9999;
+			/* وضعه في الطبقة التي تلي الزر */
+		}
+
+		/* Community description text */
+		.right-content p {
+			line-height: 1.4;
+		}
+
+		/* Main hero heading */
+		.backk-image1 h1 {
+			line-height: 1.4;
+		}
+
+		/* Hero paragraph */
+		.backk-image1 .agrandir-text {
+			line-height: 1.14;
+		}
+	</style>
+
+</head>
+
+<body>
+	<!-- صورة Backk (الأولى) -->
+	<div class="backk-image1">
+		<div class="main-content">
+			<div class="logo-container">
+				<img src="img/logoup.png" alt="Logo" class="logo">
+			</div>
+			<h1>We're Here. We're Ready.<br>Are You?</h1>
+			<p class="agrandir-text">
+				We've been watching, waiting, and preparing. <br><br>
+				The streets of Jeddah are calling, and Jeddin is here to answer—but we need you. <br>
+				It's time to revive the culture of street sports.<br><br>Ready to enter our world?
+			</p>
+			<a href="https://docs.google.com/forms/d/e/1FAIpQLScid6RzjtoxXiJ5-O-dJ1L-_8qhJUxbjAVGOoBd1WL3YriSOQ/viewform"
+				class="button">Yes, I can do it!</a>
+		</div>
+	</div>
+
+	<header>
+		<img src="img/logo.png" alt="Logo">
+		<nav>
+			<a href="site-ar.html"><span
+					style="direction: rtl; margin-right: 10px; display: inline-block;">عربي</span></a>
+		</nav>
+		<img src="img/eng-ar.png" alt="Eng-Ar" class="lang-img">
+
+	</header>
+
+	<!-- صورة Backk (الثانية) -->
+	<div class="backk-image2 second-section">
+		<div class="main-content">
+			<div class="left-content">
+				<h1 class="who-text" style="position: relative; z-index: 9999;">
+					W<span style="color: #cc2639;">H</span>O<br>
+					A<span style="color: #cc2639;">R</span>E<br>
+					W<span style="color: #cc2639;">E</span>?
+				</h1>
+			</div>
+			<div class="right-content">
+				<p class="agrandir-text">
+					Jeddin is a community of local skateboarders and BMXers in Jeddah, here to highlight the talent in
+					our streets.
+					<br> <br>
+					We're all about creating a space where you can chase your passion, connect with others who share
+					your vibe, and show off your skills.
+					<br> <br>
+					Our mission?
+					<br>
+					To be part of something bigger. Pushing the limits of Extreme sports, raising the level of the
+					city's scene, and inspiring thousands of athletes around the world.
+				</p>
+			</div>
+			<h2 style="color: white; font-size: clamp(40px, 8vw, 80px);" class="graffiti-text">#jeddin</h2>
+
+			<!-- قسم الأزرار مع الأيقونات -->
+			<div style="position: relative; margin-top: 50px; text-align: center;">
+				<div class="social-icons">
+					<a href="https://www.tiktok.com/@jeddinrep"><i class="fab fa-tiktok"></i></a>
+					<a href="https://www.instagram.com/jeddinrep/"><i class="fab fa-instagram"></i></a>
+					<a href="https://youtube.com/@jeddinrep"><i class="fab fa-youtube"></i></a>
+					<a href="https://x.com/Jeddinrep"><i class="fab fa-x-twitter"></i></a>
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	</div>
+
+</body>
+
+</html>
