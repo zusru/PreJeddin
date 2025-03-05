@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/png" href="img/WebLogo.jpg">
+    <link rel="apple-touch-icon" href="img/WebLogo.jpg">
+    <title>Jeddin | Street Culture</title>
+    <style>
+        /* Core Settings */
+        @font-face {
+            font-family: 'Norwester';
+            src: url('fonts/norwester.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'Sprite-Graffiti';
+            src: url('fonts/Sprite-Graffiti.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'Agrandir-Tight';
+            src: url('fonts/agrandir-tight.otf') format('opentype');
+        }
+
+        :root {
+            --primary-color: #cc2639;
+            --hover-color: #e63946;
+            --dark-bg: #0a0a0a;
+            --text-color: #ffffff;
+            --accent-color: #00e5ff;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-family: 'Agrandir-Tight', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Dynamic Background */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('img/BackGround1.png') no-repeat center top;
+            background-size: cover;
+            z-index: -2;
+            filter: contrast(1.1) brightness(0.7);
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1Ii8+PC9zdmc+');
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        /* VHS Scan Lines Effect */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(transparent 0px,
+                    rgba(0, 0, 0, 0.05) 1px,
+                    transparent 2px);
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.3;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            height: auto;
+            min-height: 45px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 15px rgba(204, 38, 57, 0.3);
+            border-bottom: 1px solid rgba(204, 38, 57, 0.5);
+        }
+
+        header.scrolled {
+            background-color: rgba(0, 0, 0, 0.95);
+            padding: 8px 20px;
+        }
+
+        header img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        header img:hover {
+            transform: scale(1.1);
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-family: 'Norwester', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 3px;
+        }
+
+        header nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        header nav a:hover::after {
+            width: 100%;
+        }
+
+        .lang-img {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .lang-img:hover {
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        /* Main Sections */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 80px 20px;
+        }
+
+        .section-content {
+            width: 100%;
+            max-width: 1200px;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        #hero {
+            position: relative;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(10, 10, 10, 0.8)), url('img/skatepark-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .logo-container {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .logo-container img {
+            width: min(300px, 80vw);
+            height: auto;
+            filter: drop-shadow(0 0 15px rgba(204, 38, 57, 0.5));
+            animation: pulse 3s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                filter: drop-shadow(0 0 5px rgba(204, 38, 57, 0.5));
+            }
+
+            100% {
+                filter: drop-shadow(0 0 20px rgba(204, 38, 57, 0.8));
+            }
+        }
+
+        .hero-title {
+            font-family: 'Sprite-Graffiti', sans-serif;
+            font-size: clamp(36px, 8vw, 64px);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 0 rgba(204, 38, 57, 0.7);
+            transform: rotate(-1deg);
+        }
+
+        .hero-text {
+            font-size: clamp(18px, 3vw, 24px);
+            margin-bottom: 40px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .button {
+            padding: 15px 40px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            font-size: clamp(16px, 4vw, 24px);
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            font-family: 'Norwester', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 2px;
+            transform: skewX(-5deg);
+        }
+
+        .button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+
+        .button:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-5px) skewX(-5deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .button:hover:before {
+            left: 100%;
+        }
+
+        /* About Section */
+        #about {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/street-graffiti.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .who-title {
+            font-family: 'Sprite-Graffiti', sans-serif;
+            font-size: clamp(60px, 15vw, 130px);
+            line-height: 0.9;
+            margin: 0;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+            color: white;
+            transform: rotate(-3deg);
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .about-text {
+            font-size: clamp(16px, 2.5vw, 22px);
+            line-height: 1.6;
+        }
+
+        .hashtag {
+            font-family: 'Sprite-Graffiti', sans-serif;
+            font-size: clamp(40px, 10vw, 90px);
+            color: var(--primary-color);
+            text-align: center;
+            margin: 50px 0 30px;
+            transform: rotate(-2deg);
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+            transform: translateY(-8px) scale(1.1);
+        }
+
+        .social-icons a:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .social-icons a:hover:after {
+            width: 100%;
+        }
+
+        /* Street Culture Elements */
+        .sticker {
+            position: absolute;
+            z-index: 5;
+            transform: rotate(random(20) - 10deg);
+            filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .sticker:hover {
+            transform: scale(1.1) rotate(random(5) - 2deg);
+        }
+
+        .sticker-1 {
+            top: 15%;
+            left: 5%;
+            width: 80px;
+        }
+
+        .sticker-2 {
+            bottom: 20%;
+            right: 8%;
+            width: 100px;
+        }
+
+        /* Skateboard Animation */
+        .skateboard {
+            position: absolute;
+            bottom: 10%;
+            left: -150px;
+            width: 120px;
+            animation: moveRight 15s linear infinite;
+            z-index: 5;
+        }
+
+        @keyframes moveRight {
+            0% {
+                transform: translateX(0) rotate(0);
+                left: -150px;
+            }
+
+            100% {
+                transform: translateX(calc(100vw + 150px)) rotate(360deg);
+                left: 100%;
+            }
+        }
+
+        /* Dynamic Elements */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Moving Background Elements */
+        .bg-element {
+            position: absolute;
+            opacity: 0.2;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .skate {
+            width: 150px;
+            height: 150px;
+            background: url('img/skate-silhouette.png') no-repeat center/contain;
+            top: 20%;
+            left: 10%;
+            filter: drop-shadow(0 0 8px var(--primary-color));
+        }
+
+        .bmx {
+            width: 180px;
+            height: 180px;
+            background: url('img/bmx-silhouette.png') no-repeat center/contain;
+            bottom: 15%;
+            right: 10%;
+            filter: drop-shadow(0 0 8px var(--primary-color));
+        }
+
+        /* Media Queries */
+        @media screen and (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .who-title {
+                text-align: center;
+            }
+
+            .section {
+                padding: 100px 20px;
+            }
+
+            .hero-title,
+            .who-title {
+                margin-top: 20px;
+            }
+        }
+
+        /* Animated Gradient Border */
+        .gradient-border {
+            --border-width: 3px;
+            position: relative;
+            border-radius: 2px;
+            padding: 40px;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .gradient-border::after {
+            position: absolute;
+            content: "";
+            top: calc(-1 * var(--border-width));
+            left: calc(-1 * var(--border-width));
+            z-index: -1;
+            width: calc(100% + var(--border-width) * 2);
+            height: calc(100% + var(--border-width) * 2);
+            background: linear-gradient(60deg,
+                    #cc2639, #e63946, #f1c40f, #00e5ff);
+            background-size: 300% 300%;
+            background-position: 0 50%;
+            border-radius: calc(2px + var(--border-width));
+            animation: moveGradient 4s alternate infinite;
+        }
+
+        /* Street tags section */
+        #street-tags {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('img/urban-texture.jpg');
+            background-size: cover;
+        }
+
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .tag {
+            font-family: 'Sprite-Graffiti', sans-serif;
+            background: rgba(204, 38, 57, 0.9);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 2px;
+            transform: rotate(random(6) - 3deg);
+            font-size: 18px;
+            box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            transform: scale(1.1) rotate(0);
+            background: var(--primary-color);
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            color: white;
+            font-size: clamp(40px, 8vw, 70px);
+            letter-spacing: 3px;
+            animation: glitch 2s linear infinite;
+        }
+
+        @keyframes glitch {
+
+            2%,
+            64% {
+                transform: translate(2px, 0) skew(0deg);
+            }
+
+            4%,
+            60% {
+                transform: translate(-2px, 0) skew(0deg);
+            }
+
+            62% {
+                transform: translate(0, 0) skew(5deg);
+            }
+        }
+
+        .glitch:before,
+        .glitch:after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch:before {
+            left: 2px;
+            text-shadow: -2px 0 var(--accent-color);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch:after {
+            left: -2px;
+            text-shadow: -2px 0 var(--primary-color);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(31px, 9999px, 94px, 0);
+            }
+
+            5% {
+                clip: rect(70px, 9999px, 71px, 0);
+            }
+
+            10% {
+                clip: rect(29px, 9999px, 83px, 0);
+            }
+
+            15% {
+                clip: rect(38px, 9999px, 53px, 0);
+            }
+
+            20% {
+                clip: rect(16px, 9999px, 57px, 0);
+            }
+
+            25% {
+                clip: rect(94px, 9999px, 46px, 0);
+            }
+        }
+
+        @keyframes glitch-anim2 {
+            0% {
+                clip: rect(93px, 9999px, 27px, 0);
+            }
+
+            5% {
+                clip: rect(54px, 9999px, 21px, 0);
+            }
+
+            10% {
+                clip: rect(45px, 9999px, 43px, 0);
+            }
+
+            15% {
+                clip: rect(47px, 9999px, 24px, 0);
+            }
+
+            20% {
+                clip: rect(45px, 9999px, 65px, 0);
+            }
+
+            25% {
+                clip: rect(31px, 9999px, 15px, 0);
+            }
+        }
+
+        @keyframes moveGradient {
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+    <div class="noise-overlay"></div>
+
+    <header>
+        <img src="img/logo.png" alt="Logo" class="logo-header">
+        <nav>
+            <a href="#about">About</a>
+            <a href="#street-tags">Crew</a>
+            <a href="https://jeddin.com/">عربي</a>
+        </nav>
+        <img src="img/eng-ar.png" alt="Eng-Ar" class="lang-img">
+    </header>
+
+    <section id="hero" class="section">
+        <div class="section-content">
+            <div class="logo-container">
+                <img src="img/logoup.png" alt="Logo" class="logo floating">
+                <img src="img/sticker1.png" alt="Sticker" class="sticker sticker-1">
+                <img src="img/sticker2.png" alt="Sticker" class="sticker sticker-2">
+            </div>
+            <h1 class="hero-title" data-text="No Rules. Just Skate.">No Rules. Just Skate.</h1>
+            <p class="hero-text">
+                The streets of Jeddah are calling. We're taking back the concrete jungle.
+                No posers. No fakers. Just real riders with real skills.
+                Ready to break limits and join the movement?
+            </p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScid6RzjtoxXiJ5-O-dJ1L-_8qhJUxbjAVGOoBd1WL3YriSOQ/viewform"
+                class="button">Join The Crew</a>
+        </div>
+        <div class="bg-element skate"></div>
+        <img src="img/skateboard-silhouette.png" alt="Skateboard" class="skateboard">
+    </section>
+
+    <section id="about" class="section">
+        <div class="section-content gradient-border">
+            <div class="about-grid">
+                <div>
+                    <h1 class="who-title">
+                        W<span class="highlight">H</span>O<br>
+                        A<span class="highlight">R</span>E<br>
+                        W<span class="highlight">E</span>?
+                    </h1>
+                </div>
+                <div>
+                    <p class="about-text">
+                        We're not just skaters and BMXers. We're street artists with wheels.
+                        <br><br>
+                        Jeddin is about breaking free from the ordinary, pushing boundaries, and finding your tribe.
+                        Every curb, rail, and wall in Jeddah is our canvas.
+                        <br><br>
+                        Our mission?
+                        <br>
+                        To build the most legit street sports community in Saudi. No sellouts. No corporate BS.
+                        Just pure street culture and mad skills that'll make your parents nervous.
+                    </p>
+                </div>
+            </div>
+            <h2 class="hashtag">#jeddin</h2>
+            <div class="social-icons">
+                <a href="https://www.tiktok.com/@jeddinrep" title="Watch our tricks on TikTok"><i
+                        class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/jeddinrep/" title="Follow our Instagram"><i
+                        class="fab fa-instagram"></i></a>
+                <a href="https://youtube.com/@jeddinrep" title="Subscribe on YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://x.com/Jeddinrep" title="Follow us on X"><i class="fab fa-x-twitter"></i></a>
+            </div>
+        </div>
+        <div class="bg-element bmx"></div>
+    </section>
+
+    <section id="street-tags" class="section">
+        <div class="section-content">
+            <h2 class="glitch" data-text="THE CREW">THE CREW</h2>
+            <p class="about-text" style="text-align: center;">
+                We're skaters, BMXers, artists, rebels, and dreamers.
+                United by our love for street culture and the freedom it brings.
+            </p>
+
+            <div class="tag-cloud">
+                <span class="tag">Boardslides</span>
+                <span class="tag">Air Tricks</span>
+                <span class="tag">Street Style</span>
+                <span class="tag">Half Pipes</span>
+                <span class="tag">Grinds</span>
+                <span class="tag">Ollies</span>
+                <span class="tag">Rail Slides</span>
+                <span class="tag">BMX</span>
+                <span class="tag">Urban</span>
+                <span class="tag">Kickflips</span>
+                <span class="tag">Street Art</span>
+                <span class="tag">Manuals</span>
+            </div>
+
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScid6RzjtoxXiJ5-O-dJ1L-_8qhJUxbjAVGOoBd1WL3YriSOQ/viewform"
+                class="button">Show Us Your Skills</a>
+        </div>
+    </section>
+
+    <script>
+        // Scroll animation for header
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Reveal animations on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section-content').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Parallax effect for background elements
+        document.addEventListener('mousemove', function (e) {
+            const skate = document.querySelector('.skate');
+            const bmx = document.querySelector('.bmx');
+            const stickers = document.querySelectorAll('.sticker');
+
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+
+            skate.style.transform = `translate(${mouseX * 20}px, ${mouseY * 20}px)`;
+            bmx.style.transform = `translate(${-mouseX * 30}px, ${-mouseY * 30}px)`;
+
+            stickers.forEach(sticker => {
+                sticker.style.transform = `rotate(${mouseX * 10}deg) scale(${1 + mouseY * 0.1})`;
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Create random rotation for tags
+        document.querySelectorAll('.tag').forEach(tag => {
+            const rotation = Math.random() * 6 - 3;
+            tag.style.transform = `rotate(${rotation}deg)`;
+        });
+    </script>
+</body>
+
+</html>
