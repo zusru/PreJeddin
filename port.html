@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Eng. Shadi - Computer & Network Engineering Specialist with expertise in cybersecurity, network analysis, and Linux systems">
+    <title>Eng. Shadi | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6a1b9a;
+            --hover-color: #8e24aa;
+            --dark-bg: #0a0a0a;
+            --text-color: #ffffff;
+            --accent-color: #00e5ff;
+            --card-bg: rgba(10, 10, 10, 0.8);
+            --border-color: rgba(106, 27, 154, 0.5);
+        }
+
+        @font-face {
+            font-family: 'Norwester';
+            src: url('fonts/norwester.otf') format('opentype');
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Sprite-Graffiti';
+            src: url('fonts/Sprite-Graffiti.otf') format('opentype');
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Agrandir-Tight';
+            src: url('fonts/agrandir-tight.otf') format('opentype');
+            font-display: swap;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Background */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('img/tech-background.jpg') no-repeat center center;
+            background-size: cover;
+            z-index: -2;
+            filter: brightness(0.4);
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-sizing: border-box;
+            transition: padding 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 2px 15px rgba(106, 27, 154, 0.4);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        header.scrolled {
+            padding: 8px 20px;
+            background-color: rgba(0, 0, 0, 0.95);
+        }
+
+        header .logo {
+            height: 40px;
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+
+        header .logo:hover {
+            transform: scale(1.1);
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-family: 'Norwester', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 3px;
+            transition: color 0.3s ease;
+        }
+
+        header nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        header nav a:hover {
+            color: var(--accent-color);
+        }
+
+        header nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Sections */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .section-content {
+            width: 100%;
+            max-width: 1200px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            will-change: opacity, transform;
+        }
+
+        .section-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        #hero {
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(10, 10, 10, 0.9)), url('img/tech-grid.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(106, 27, 154, 0.6);
+            object-fit: cover;
+        }
+
+        .hero-title {
+            font-family: 'Sprite-Graffiti', sans-serif;
+            font-size: clamp(36px, 8vw, 64px);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 0 rgba(106, 27, 154, 0.7);
+            transform: rotate(-1deg);
+        }
+
+        .hero-subtitle {
+            font-family: 'Norwester', sans-serif;
+            font-size: clamp(16px, 3vw, 20px);
+            margin: 0 auto 15px;
+            max-width: 800px;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+        }
+
+        .hero-text {
+            font-size: clamp(18px, 3vw, 24px);
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            max-width: 800px;
+        }
+
+        .button {
+            padding: 15px 40px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            font-family: 'Norwester', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            will-change: transform;
+        }
+
+        .button:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-3px);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .tech-title {
+            font-family: 'Sprite-Graffiti', sans-serif;
+            font-size: clamp(60px, 15vw, 130px);
+            line-height: 0.9;
+            margin: 0;
+            text-transform: uppercase;
+            text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+            transform: rotate(-3deg);
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            display: inline-block;
+        }
+
+        .about-text {
+            font-size: clamp(16px, 2.5vw, 22px);
+            line-height: 1.6;
+        }
+
+        .fun-fact {
+            background-color: rgba(106, 27, 154, 0.3);
+            padding: 15px;
+            border-left: 4px solid var(--primary-color);
+            margin-top: 20px;
+            font-style: italic;
+            border-radius: 0 5px 5px 0;
+        }
+
+        /* Expertise & Projects Sections */
+        #expertise,
+        #projects {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('img/network-nodes.jpg');
+            background-size: cover;
+        }
+
+        .expertise-grid,
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            will-change: transform;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary-color);
+        }
+
+        .card h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-family: 'Norwester', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .card i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            color: white;
+            font-size: clamp(40px, 8vw, 70px);
+            font-family: 'Sprite-Graffiti', sans-serif;
+            letter-spacing: 3px;
+        }
+
+        /* Arabic Text Styling */
+        .arabic-text {
+            font-family: 'Amiri', serif;
+            line-height: 1.8;
+            direction: rtl;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(10, 10, 10, 0.95)), url('img/circuit-pattern.jpg');
+            background-size: cover;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(106, 27, 154, 0.3);
+            color: white;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 2rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            will-change: transform;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+            transform: translateY(-8px) scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .contact-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .contact-item {
+            padding: 15px;
+        }
+
+        .contact-item h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-family: 'Norwester', sans-serif;
+        }
+
+        /* Fun Elements */
+        .fun-quote {
+            font-style: italic;
+            text-align: center;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: rgba(106, 27, 154, 0.2);
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .fun-quote:before {
+            content: '"';
+            font-size: 80px;
+            position: absolute;
+            left: 10px;
+            top: -20px;
+            color: rgba(106, 27, 154, 0.3);
+        }
+
+        /* Media Queries */
+        @media screen and (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .tech-title {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .section {
+                padding: 100px 20px 40px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .contact-items {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .background-overlay {
+                display: none;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            .section {
+                min-height: auto;
+                page-break-inside: avoid;
+            }
+
+            header,
+            .button,
+            .social-icons {
+                display: none;
+            }
+        }
+    </style>
+    <link rel="preload" href="fonts/Sprite-Graffiti.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="fonts/norwester.otf" as="font" type="font/otf" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+
+    <header id="header">
+        <img src="img/logo-tech.png" width="40" height="40" alt="Shadi Tech" class="logo">
+        <nav>
+            <a href="#about">About</a>
+            <a href="#expertise">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="section">
+            <div class="section-content">
+                <div>
+                    <img src="img/profile-photo.jpg" width="180" height="180" alt="Eng. Shadi" class="profile-image"
+                        loading="eager">
+                </div>
+                <h1 class="hero-title">Eng. Shadi</h1>
+                <p class="hero-subtitle">COMPUTER ENGINEERING AND NETWORKING STUDENT AT UNIVERSITY OF JEDDAH</p>
+                <p class="hero-text">
+                    Computer & Network Engineering Specialist breaking boundaries in technology
+                </p>
+                <a href="#contact" class="button">Get In Touch</a>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="section-content">
+                <div class="about-grid">
+                    <div>
+                        <h2 class="tech-title">
+                            T<span class="highlight">E</span>CH<br>
+                            V<span class="highlight">I</span>SION
+                        </h2>
+                    </div>
+                    <div>
+                        <p class="about-text">
+                            I am an engineer passionate about technology and education, with expertise in programming,
+                            network analysis, and cybersecurity. Currently, I am studying Computer and Network
+                            Engineering at the University of Jeddah and actively participating in workshops focused on
+                            network
+                            security and modern technologies.
+                            <br><br>
+                            My goal is to push the boundaries of what's possible with technology while maintaining the
+                            highest security standards.
+                        </p>
+                        <div class="fun-fact arabic-text">
+                            هل أنا أقوى مما تتوقع؟ نعم! أنا مهندس الشبكات ومخترق المستحيل.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="expertise" class="section">
+            <div class="section-content">
+                <h2 class="glitch">EXPERTISE</h2>
+                <div class="expertise-grid">
+                    <div class="card">
+                        <i class="fas fa-network-wired" aria-hidden="true"></i>
+                        <h3>Network Analysis</h3>
+                        <p>Skilled in examining network data using tools like Wireshark, packet analysis, and network
+                            diagnostics for optimized performance and security.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                        <h3>Cybersecurity</h3>
+                        <p>Specializing in network security protocols, threat detection, and implementing robust
+                            security measures to protect critical systems.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fab fa-linux" aria-hidden="true"></i>
+                        <h3>Linux Systems</h3>
+                        <p>Experienced in developing and customizing Linux distributions for specialized applications,
+                            server administration, and security hardening.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-code" aria-hidden="true"></i>
+                        <h3>Programming</h3>
+                        <p>Proficient in multiple programming languages with a focus on creating efficient, secure, and
+                            innovative solutions for complex problems.</p>
+                    </div>
+                </div>
+                <div class="fun-quote">
+                    "فلفل.. بهار.. وكل ما هو للمهندسين.. هكذا وجد شادي بالجامعة باستعماله لهندسته الخارقة في محاربة
+                    الصعوبات وقوة الشر"
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="section-content">
+                <h2 class="glitch">PROJECTS</h2>
+                <div class="projects-grid">
+                    <div class="card">
+                        <i class="fab fa-linux" aria-hidden="true"></i>
+                        <h3>Custom Linux Distribution</h3>
+                        <p>Developing a specialized Linux-based operating system with enhanced security features for
+                            educational environments and penetration testing.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-user-shield" aria-hidden="true"></i>
+                        <h3>Cybersecurity Training Platform</h3>
+                        <p>Creating an interactive online platform focused on network and cybersecurity challenges,
+                            designed to simulate real-world security scenarios.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-robot" aria-hidden="true"></i>
+                        <h3>AI Ethics Framework</h3>
+                        <p>Developing comprehensive guidelines on the ethical use of artificial intelligence in modern
+                            technological applications and cybersecurity.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="section-content">
+                <h2 class="glitch">GET IN TOUCH</h2>
+                <div class="contact-form">
+                    <form action="submit_form.php" method="POST">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Your Message" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="button">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="contact-items">
+                    <div class="contact-item">
+                        <h3>Email</h3>
+                        <a href="mailto:hrshadi155@gmail.com">hrshadi155@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Phone</h3>
+                        <a href="tel:+966570057252">+966 570 057 252</a>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Location</h3>
+                        <span>Jeddah, Saudi Arabia</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/shadihabeeb/" aria-label="LinkedIn"><i class="fab fa-linkedin"
+                    aria-hidden="true"></i></a>
+            <a href="https://github.com/zusru" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+            <a href="https://x.com/sa_contigo" aria-label="Twitter"><i class="fab fa-x-twitter"
+                    aria-hidden="true"></i></a>
+            <a href="https://www.instagram.com/zus_ru/" aria-label="Instagram"><i class="fab fa-instagram"
+                    aria-hidden="true"></i></a>
+        </div>
+        <p>&copy; 2023 Eng. Shadi | Computer & Network Engineering Specialist</p>
+    </footer>
+
+    <script>
+        // Use passive event listeners for better scroll performance
+        document.addEventListener('DOMContentLoaded', function () {
+            // Scroll animation for header
+            window.addEventListener('scroll', function () {
+                const header = document.querySelector('header');
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            }, { passive: true });
+
+            // Reveal animations on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.section-content').forEach(section => {
+                observer.observe(section);
+            });
+
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
