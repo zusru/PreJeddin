@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/png" href="img/WebLogo.jpg">
+    <link rel="apple-touch-icon" href="img/WebLogo.jpg">
+    <title>Jeddin</title>
+    <style>
+        /* Core Settings */
+        @font-face {
+            font-family: 'Norwester';
+            src: url('fonts/norwester.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'Sprite-Graffiti';
+            src: url('fonts/Sprite-Graffiti.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'Agrandir-Tight';
+            src: url('fonts/agrandir-tight.otf') format('opentype');
+        }
+
+        :root {
+            --primary-color: #cc2639;
+            --hover-color: #e63946;
+            --dark-bg: #121212;
+            --text-color: #ffffff;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-family: 'Agrandir-Tight', sans-serif;
+        }
+
+        /* Dynamic Background */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('img/BackGround1.png') no-repeat center top;
+            background-size: cover;
+            z-index: -2;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1Ii8+PC9zdmc+');
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            height: auto;
+            min-height: 45px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        header.scrolled {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        header img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        header img:hover {
+            transform: scale(1.1);
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-family: 'Norwester', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 3px;
+        }
+
+        header nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        header nav a:hover::after {
+            width: 100%;
+        }
+
+        .lang-img {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .lang-img:hover {
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        /* Main Sections */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 80px 20px;
+        }
+
+        .section-content {
+            width: 100%;
+            max-width: 1200px;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        #hero {
+            position: relative;
+            text-align: center;
+        }
+
+        .logo-container {
+            margin-bottom: 30px;
+        }
+
+        .logo-container img {
+            width: min(300px, 80vw);
+            height: auto;
+            filter: drop-shadow(0 0 15px rgba(204, 38, 57, 0.5));
+            animation: pulse 3s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                filter: drop-shadow(0 0 5px rgba(204, 38, 57, 0.5));
+            }
+
+            100% {
+                filter: drop-shadow(0 0 20px rgba(204, 38, 57, 0.8));
+            }
+        }
+
+        .hero-title {
+            font-family: 'Norwester', sans-serif;
+            font-size: clamp(36px, 8vw, 64px);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 3px 3px 0 rgba(204, 38, 57, 0.7);
+        }
+
+        .hero-text {
+            font-size: clamp(18px, 3vw, 24px);
+            margin-bottom: 40px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .button {
+            padding: 15px 40px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            font-size: clamp(16px, 4vw, 24px);
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            font-family: 'Norwester', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+
+        .button:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .button:hover:before {
+            left: 100%;
+        }
+
+        /* About Section */
+        #about {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/Backk.png');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .who-title {
+            font-family: 'Norwester', sans-serif;
+            font-size: clamp(60px, 15vw, 130px);
+            line-height: 0.9;
+            margin: 0;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .about-text {
+            font-size: clamp(16px, 2.5vw, 22px);
+            line-height: 1.6;
+        }
+
+        .hashtag {
+            font-family: 'Sprite-Graffiti', sans-serif;
+            font-size: clamp(40px, 10vw, 90px);
+            color: var(--primary-color);
+            text-align: center;
+            margin: 50px 0 30px;
+            transform: rotate(-2deg);
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+            transform: translateY(-8px) scale(1.1);
+        }
+
+        .social-icons a:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .social-icons a:hover:after {
+            width: 100%;
+        }
+
+        /* Dynamic Elements */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Moving Background Elements */
+        .bg-element {
+            position: absolute;
+            opacity: 0.15;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .skate {
+            width: 150px;
+            height: 150px;
+            background: url('img/skate-silhouette.png') no-repeat center/contain;
+            top: 20%;
+            left: 10%;
+        }
+
+        .bmx {
+            width: 180px;
+            height: 180px;
+            background: url('img/bmx-silhouette.png') no-repeat center/contain;
+            bottom: 15%;
+            right: 10%;
+        }
+
+        /* Media Queries */
+        @media screen and (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .who-title {
+                text-align: center;
+            }
+
+            .section {
+                padding: 100px 20px;
+            }
+
+            .hero-title,
+            .who-title {
+                margin-top: 20px;
+            }
+        }
+
+        /* Animated Gradient Border */
+        .gradient-border {
+            --border-width: 3px;
+            position: relative;
+            border-radius: 10px;
+            padding: 40px;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .gradient-border::after {
+            position: absolute;
+            content: "";
+            top: calc(-1 * var(--border-width));
+            left: calc(-1 * var(--border-width));
+            z-index: -1;
+            width: calc(100% + var(--border-width) * 2);
+            height: calc(100% + var(--border-width) * 2);
+            background: linear-gradient(60deg,
+                    #cc2639, #e63946, #f1c40f, #cc2639);
+            background-size: 300% 300%;
+            background-position: 0 50%;
+            border-radius: calc(10px + var(--border-width));
+            animation: moveGradient 4s alternate infinite;
+        }
+
+        @keyframes moveGradient {
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+    <div class="noise-overlay"></div>
+
+    <header>
+        <img src="img/logo.png" alt="Logo" class="logo-header">
+        <nav>
+            <a href="https://jeddin.com/">عربي</a>
+        </nav>
+        <img src="img/eng-ar.png" alt="Eng-Ar" class="lang-img">
+    </header>
+
+    <section id="hero" class="section">
+        <div class="section-content">
+            <div class="logo-container">
+                <img src="img/logoup.png" alt="Logo" class="logo floating">
+            </div>
+            <h1 class="hero-title">We're Here. We're Ready.<br>Are You?</h1>
+            <p class="hero-text">
+                We've been watching, waiting, and preparing.
+                The streets of Jeddah are calling, and Jeddin is here to answer—but we need you.
+                It's time to revive the culture of street sports. Ready to enter our world?
+            </p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScid6RzjtoxXiJ5-O-dJ1L-_8qhJUxbjAVGOoBd1WL3YriSOQ/viewform"
+                class="button">Yes, I can do it!</a>
+        </div>
+        <div class="bg-element skate"></div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="section-content gradient-border">
+            <div class="about-grid">
+                <div>
+                    <h1 class="who-title">
+                        W<span class="highlight">H</span>O<br>
+                        A<span class="highlight">R</span>E<br>
+                        W<span class="highlight">E</span>?
+                    </h1>
+                </div>
+                <div>
+                    <p class="about-text">
+                        Jeddin is a community of local skateboarders and BMXers in Jeddah, here to highlight the talent
+                        in
+                        our streets.
+                        <br><br>
+                        We're all about creating a space where you can chase your passion, connect with others who share
+                        your vibe, and show off your skills.
+                        <br><br>
+                        Our mission?
+                        <br>
+                        To be part of something bigger. Pushing the limits of Extreme sports, raising the level of the
+                        city's scene, and inspiring thousands of athletes around the world.
+                    </p>
+                </div>
+            </div>
+            <h2 class="hashtag">#jeddin</h2>
+            <div class="social-icons">
+                <a href="https://www.tiktok.com/@jeddinrep"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/jeddinrep/"><i class="fab fa-instagram"></i></a>
+                <a href="https://youtube.com/@jeddinrep"><i class="fab fa-youtube"></i></a>
+                <a href="https://x.com/Jeddinrep"><i class="fab fa-x-twitter"></i></a>
+            </div>
+        </div>
+        <div class="bg-element bmx"></div>
+    </section>
+
+    <script>
+        // Scroll animation for header
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Reveal animations on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section-content').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Parallax effect for background elements
+        document.addEventListener('mousemove', function (e) {
+            const skate = document.querySelector('.skate');
+            const bmx = document.querySelector('.bmx');
+
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+
+            skate.style.transform = `translate(${mouseX * 20}px, ${mouseY * 20}px)`;
+            bmx.style.transform = `translate(${-mouseX * 30}px, ${-mouseY * 30}px)`;
+        });
+
+        // Add dynamic text typing effect to the hero section
+        const phrases = [
+            "We're Here. We're Ready. Are You?",
+            "Join The Movement. Break Limits.",
+            "Street Sports. Real Culture.",
+            "Skate. BMX. Jeddin."
+        ];
+
+        let currentPhrase = 0;
+        let currentChar = 0;
+        let isDeleting = false;
+        let isPaused = false;
+        let typingSpeed = 100;
+
+        function typeEffect() {
+            const heroTitle = document.querySelector('.hero-title');
+            const currentText = phrases[currentPhrase];
+
+            if (!isPaused) {
+                if (isDeleting) {
+                    heroTitle.innerHTML = currentText.substring(0, currentChar - 1) + '<span class="cursor">|</span>';
+                    currentChar--;
+                    typingSpeed = 50;
+                } else {
+                    heroTitle.innerHTML = currentText.substring(0, currentChar + 1) + '<span class="cursor">|</span>';
+                    currentChar++;
+                    typingSpeed = 100;
+                }
+
+                if (!isDeleting && currentChar === currentText.length) {
+                    isPaused = true;
+                    setTimeout(() => {
+                        isPaused = false;
+                        isDeleting = true;
+                    }, 2000);
+
+                } else if (isDeleting && currentChar === 0) {
+                    isDeleting = false;
+                    currentPhrase = (currentPhrase + 1) % phrases.length;
+                }
+            }
+
+            setTimeout(typeEffect, typingSpeed);
+        }
+
+        // Uncomment to enable the typing effect
+        // typeEffect();
+
+        // Add particle effect (simplified version)
+        function createParticles() {
+            const particles = document.createElement('div');
+            particles.className = 'particles';
+            document.body.appendChild(particles);
+
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = `${Math.random() * 5 + 2}px`;
+                particle.style.height = particle.style.width;
+                particle.style.background = '#cc2639';
+                particle.style.position = 'fixed';
+                particle.style.top = `${Math.random() * 100}vh`;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                particle.style.borderRadius = '50%';
+                particle.style.zIndex = '1';
+                particle.style.pointerEvents = 'none';
+
+                const duration = Math.random() * 10 + 10;
+                particle.style.animation = `float ${duration}s linear infinite`;
+
+                particles.appendChild(particle);
+            }
+
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes float {
+                    0% {
+                        transform: translateY(0) rotate(0);
+                    }
+                    100% {
+                        transform: translateY(-100vh) rotate(360deg);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Uncomment to enable particles
+        // createParticles();
+    </script>
+</body>
+
+</html>
+</p>

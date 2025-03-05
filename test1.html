@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/png" href="img/WebLogo.jpg">
+    <link rel="apple-touch-icon" href="img/WebLogo.jpg">
+    <title>Jeddin | Skate or Die</title>
+    <style>
+        @font-face {
+            font-family: 'Norwester';
+            src: url('fonts/norwester.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'Sprite-Graffiti';
+            src: url('fonts/Sprite-Graffiti.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'Agrandir-Tight';
+            src: url('fonts/agrandir-tight.otf') format('opentype');
+        }
+
+        :root {
+            --jeddin-red: #ff3a3a;
+            --jeddin-dark: #121212;
+            --jeddin-yellow: #ffcc00;
+            --jeddin-blue: #3498db;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Agrandir-Tight', sans-serif;
+            background: url('img/BackGround1.png') no-repeat center top;
+            background-attachment: fixed;
+            background-size: cover;
+            color: white;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* Skate sticker effect */
+        .sticker {
+            position: relative;
+            transform: rotate(-3deg);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+            border: 3px solid white;
+            padding: 5px;
+            background: var(--jeddin-red);
+            display: inline-block;
+            max-width: 200px;
+            margin: 10px;
+        }
+
+        .sticker:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 0, 0, 0.05) 10px, rgba(0, 0, 0, 0.05) 20px);
+        }
+
+        /* Duct tape effect */
+        .tape {
+            position: relative;
+            padding: 10px;
+        }
+
+        .tape:before,
+        .tape:after {
+            content: '';
+            position: absolute;
+            background: rgba(240, 240, 240, 0.4);
+            height: 25px;
+        }
+
+        .tape:before {
+            left: -10px;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-2deg);
+        }
+
+        .tape:after {
+            left: -10px;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%) rotate(2deg);
+        }
+
+        /* Glitch effect */
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .glitch-text:before,
+        .glitch-text:after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--jeddin-dark);
+            clip: rect(0, 0, 0, 0);
+        }
+
+        .glitch-text:before {
+            left: -2px;
+            text-shadow: 2px 0 var(--jeddin-red);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+
+        .glitch-text:after {
+            left: 2px;
+            text-shadow: -2px 0 var(--jeddin-red);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+            0% {
+                clip: rect(20px, 9999px, 52px, 0);
+            }
+
+            5% {
+                clip: rect(56px, 9999px, 24px, 0);
+            }
+
+            10% {
+                clip: rect(76px, 9999px, 98px, 0);
+            }
+
+            15% {
+                clip: rect(0, 0, 0, 0);
+            }
+
+            100% {
+                clip: rect(0, 0, 0, 0);
+            }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% {
+                clip: rect(40px, 9999px, 32px, 0);
+            }
+
+            5% {
+                clip: rect(46px, 9999px, 94px, 0);
+            }
+
+            10% {
+                clip: rect(26px, 9999px, 67px, 0);
+            }
+
+            15% {
+                clip: rect(0, 0, 0, 0);
+            }
+
+            100% {
+                clip: rect(0, 0, 0, 0);
+            }
+        }
+
+        /* Spray paint border */
+        .spray-border {
+            position: relative;
+        }
+
+        .spray-border:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--jeddin-red);
+            mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 10" xmlns="http://www.w3.org/2000/svg"><path d="M0,5 C20,2 40,8 60,5 C80,2 90,7 100,5" fill="none" stroke="black" stroke-width="10"/></svg>');
+            -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 10" xmlns="http://www.w3.org/2000/svg"><path d="M0,5 C20,2 40,8 60,5 C80,2 90,7 100,5" fill="none" stroke="black" stroke-width="10"/></svg>');
+        }
+
+        /* Skate ramp effect for sections */
+        .skate-ramp {
+            position: relative;
+            border-radius: 50% 50% 0 0 / 20% 20% 0 0;
+            overflow: hidden;
+            box-shadow: 0 -15px 25px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(180deg, var(--jeddin-dark) 0%, #232323 100%);
+            padding-top: 50px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background-color: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 2px solid var(--jeddin-red);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: all 0.4s ease;
+        }
+
+        header:hover {
+            background-color: rgba(0, 0, 0, 0.95);
+        }
+
+        header img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        header img:hover {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-family: 'Norwester', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        header nav a:after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--jeddin-red);
+            transition: width 0.3s ease;
+        }
+
+        header nav a:hover:after {
+            width: 100%;
+        }
+
+        .lang-img {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 40px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .lang-img:hover {
+            opacity: 1;
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .backk-image1,
+        .backk-image2 {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            padding: 80px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .backk-image1:before,
+        .backk-image2:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('img/Backk.png') no-repeat center center/cover;
+            opacity: 0.8;
+            z-index: -1;
+        }
+
+        .backk-image1:after,
+        .backk-image2:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
+            z-index: -1;
+        }
+
+        .second-section {
+            margin-top: 0;
+        }
+
+        .main-content {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-container {
+            margin-bottom: 30px;
+            transform: translateY(-30px);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(-30px);
+            }
+
+            50% {
+                transform: translateY(-40px);
+            }
+        }
+
+        .logo-container img {
+            width: min(250px, 80vw);
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
+        }
+
+        h1 {
+            font-family: 'Norwester', sans-serif;
+            font-size: clamp(32px, 7vw, 48px);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            text-shadow: 3px 3px 0 var(--jeddin-dark), 5px 5px 0 var(--jeddin-red);
+        }
+
+        p {
+            font-size: clamp(18px, 3vw, 22px);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .button {
+            padding: 15px 40px;
+            background-color: var(--jeddin-red);
+            color: white;
+            text-decoration: none;
+            font-family: 'Norwester', sans-serif;
+            font-size: 22px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.5);
+            border-radius: 2px;
+            transform: skew(-5deg);
+        }
+
+        .button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .button:hover {
+            transform: translateY(-5px) skew(-5deg);
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .button:hover:before {
+            left: 100%;
+        }
+
+        .button:active {
+            transform: translateY(0) skew(-5deg);
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .who-text {
+            font-size: clamp(60px, 15vw, 120px);
+            line-height: 0.9;
+            margin: 40px 0;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        .highlight-text {
+            color: var(--jeddin-red);
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight-text:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--jeddin-red);
+            transform-origin: right;
+            animation: slide-in 1s ease forwards;
+            transform: scaleX(0);
+        }
+
+        @keyframes slide-in {
+            to {
+                transform: scaleX(1);
+                transform-origin: left;
+            }
+        }
+
+        .animated-text {
+            display: inline-block;
+            position: relative;
+            animation: shimmer 3s infinite;
+        }
+
+        .pulse-text {
+            display: inline-block;
+            color: var(--jeddin-red);
+            position: relative;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes shimmer {
+            0% {
+                text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+            }
+
+            50% {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+
+            100% {
+                text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .graffiti-text {
+            font-family: 'Sprite-Graffiti', sans-serif;
+            font-size: clamp(50px, 10vw, 100px);
+            color: white;
+            text-shadow:
+                -3px -3px 0 var(--jeddin-red),
+                3px -3px 0 var(--jeddin-red),
+                -3px 3px 0 var(--jeddin-red),
+                3px 3px 0 var(--jeddin-red);
+            transform: rotate(-3deg);
+            margin: 40px 0;
+            letter-spacing: 2px;
+        }
+
+        /* Skateboard trick names */
+        .trick-names {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .trick {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--jeddin-dark);
+            color: white;
+            border-left: 4px solid var(--jeddin-red);
+            font-family: 'Norwester', sans-serif;
+            transform: skew(-10deg);
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .trick:nth-child(2n) {
+            border-left-color: var(--jeddin-yellow);
+        }
+
+        .trick:nth-child(3n) {
+            border-left-color: var(--jeddin-blue);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 3.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .social-icons a:hover {
+            color: var(--jeddin-red);
+            transform: translateY(-10px) rotate(5deg);
+        }
+
+        .social-icons a:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--jeddin-red);
+            transition: width 0.3s ease;
+        }
+
+        .social-icons a:hover:after {
+            width: 120%;
+        }
+
+        #social-tooltip {
+            background-color: var(--jeddin-red);
+            border: 2px solid white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        #social-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Street edge decorations */
+        .street-edge {
+            position: absolute;
+            height: 50px;
+            width: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M0,10 L10,0 L20,10 L30,0 L40,10 L50,0 L60,10 L70,0 L80,10 L90,0 L100,10 L100,20 L0,20 Z" fill="%23ff3a3a"/></svg>');
+            background-size: 100px 20px;
+            background-repeat: repeat-x;
+        }
+
+        .street-edge-top {
+            top: -1px;
+        }
+
+        .street-edge-bottom {
+            bottom: -1px;
+            transform: rotate(180deg);
+        }
+
+        /* Skate stickers scattered around */
+        .stickers-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .sticker-item {
+            position: absolute;
+            transform: rotate(var(--rotation));
+            width: var(--size);
+            height: var(--size);
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        /* Media queries */
+        @media screen and (max-width: 768px) {
+            header {
+                padding: 10px 15px;
+            }
+
+            h1 {
+                font-size: clamp(28px, 6vw, 38px);
+            }
+
+            .who-text {
+                font-size: clamp(40px, 12vw, 80px);
+            }
+
+            .button {
+                padding: 12px 30px;
+                font-size: 18px;
+            }
+
+            .social-icons a {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .main-content {
+                width: 95%;
+            }
+
+            .button {
+                padding: 10px 25px;
+                font-size: 16px;
+            }
+
+            .social-icons {
+                gap: 15px;
+            }
+
+            .social-icons a {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Street edge decoration -->
+    <div class="street-edge street-edge-top"></div>
+
+    <!-- Hero Section -->
+    <section class="section backk-image1">
+        <div class="main-content">
+            <div class="logo-container">
+                <img src="img/logoup.png" alt="Jeddin Logo" class="logo">
+            </div>
+            <h1 class="glitch-text" data-text="SKATE OR FADE">SKATE OR FADE</h1>
+            <p class="agrandir-text">
+                The streets are <span class="highlight-text">calling</span>. Jeddin is here to answer.<br><br>
+                No rules. No limits. Just you, your board, and concrete.<br>
+                The revolution starts with a kickflip. <span class="pulse-text">Are you in?</span>
+            </p>
+
+            <div class="trick-names">
+                <span class="trick">Kickflip</span>
+                <span class="trick">Ollie</span>
+                <span class="trick">Heelflip</span>
+                <span class="trick">Pop Shove-it</span>
+                <span class="trick">Grind</span>
+            </div>
+
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScid6RzjtoxXiJ5-O-dJ1L-_8qhJUxbjAVGOoBd1WL3YriSOQ/viewform"
+                class="button">JOIN THE CREW</a>
+        </div>
+    </section>
+
+    <!-- Header -->
+    <header>
+        <img src="img/logo.png" alt="Jeddin Logo">
+        <nav>
+            <a href="https://jeddin.com/"><span
+                    style="direction: rtl; margin-right: 10px; display: inline-block;">عربي</span></a>
+        </nav>
+        <img src="img/eng-ar.png" alt="Language Switch" class="lang-img" style="height: 300px;">
+    </header>
+
+    <!-- Who Are We Section -->
+    <section class="section backk-image2 second-section skate-ramp">
+        <div class="sticker" style="position:absolute; top:10%; left:5%; transform:rotate(15deg);">
+            <span style="color:black; font-weight:bold; font-family:'Norwester'">SKATE</span>
+        </div>
+        <div class="sticker" style="position:absolute; top:20%; right:10%; transform:rotate(-10deg);">
+            <span style="color:black; font-weight:bold; font-family:'Norwester'">GRIND</span>
+        </div>
+
+        <div class="main-content">
+            <h1 class="who-text spray-border">
+                W<span style="color: var(--jeddin-yellow);">H</span>O<br>
+                A<span style="color: var(--jeddin-red);">R</span>E<br>
+                W<span style="color: var(--jeddin-blue);">E</span>?
+            </h1>
+
+            <p class="agrandir-text fade-in-text">
+                <span class="tape">Jeddin is the <span class="highlight-text">underground skate culture</span> of
+                    Jeddah.</span>
+                <br><br>
+                We're misfits, rebels, and board-riding fanatics. We live for the streets and the sound of wheels on
+                concrete.
+                <br><br>
+                <span class="animated-text">No posers.</span>
+                <span class="pulse-text">No fakers.</span>
+                <span class="animated-text">Just real skaters pushing limits</span> and
+                <span class="pulse-text">claiming our space</span> in the city.
+                <br><br>
+                <span style="font-weight: bold; font-size: 110%; text-transform:uppercase;">The Mission:</span>
+                <br>
+                Build the most <span style="font-weight: bold; color:var(--jeddin-yellow)">RADICAL</span> skate scene in
+                the region.
+                Push boundaries, break rules, and show the world what Jeddah skaters can do.
+            </p>
+
+            <h2 class="graffiti-text">#JEDDINGRIND</h2>
+
+            <!-- Social Media Icons -->
+            <div style="position: relative; margin-top: 30px; text-align: center;">
+                <div class="social-icons">
+                    <a href="https://www.tiktok.com/@jeddinrep" data-platform="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/jeddinrep/" data-platform="Instagram"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/@jeddinrep" data-platform="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://x.com/Jeddinrep" data-platform="Twitter"><i class="fab fa-x-twitter"></i></a>
+                </div>
+                <div id="social-tooltip"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Street edge decoration -->
+    <div class="street-edge street-edge-bottom"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Handle header visibility on scroll
+            const header = document.querySelector('header');
+            let lastScrollTop = 0;
+
+            window.addEventListener('scroll', function () {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > lastScrollTop) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                lastScrollTop = scrollTop;
+
+                // Add more transparency when scrolling down
+                header.style.backgroundColor = scrollTop > 100 ?
+                    'rgba(0, 0, 0, 0.9)' : 'rgba(0, 0, 0, 0.7)';
+            });
+
+            // Setup social icons interactions
+            const socialIcons = document.querySelectorAll('.social-icons a');
+            const tooltip = document.getElementById('social-tooltip');
+
+            socialIcons.forEach(icon => {
+                // Add entrance animation with staggered delay
+                icon.style.opacity = '0';
+                icon.style.transform = 'translateY(20px)';
+
+                setTimeout(() => {
+                    icon.style.transition = 'all 0.5s ease';
+                    icon.style.opacity = '1';
+                    icon.style.transform = 'translateY(0)';
+                }, Array.from(socialIcons).indexOf(icon) * 200);
+
+                // Add tooltip functionality
+                icon.addEventListener('mouseover', function (e) {
+                    const platform = this.getAttribute('data-platform');
+                    tooltip.textContent = 'Follow us on ' + platform;
+                    tooltip.style.display = 'block';
+                    tooltip.style.left = (e.pageX - tooltip.offsetWidth / 2) + 'px';
+                    tooltip.style.top = (e.pageY - 40) + 'px';
+                    setTimeout(() => tooltip.classList.add('visible'), 10);
+                });
+
+                icon.addEventListener('mouseout', function () {
+                    tooltip.classList.remove('visible');
+                    setTimeout(() => tooltip.style.display = 'none', 300);
+                });
+
+                icon.addEventListener('mousemove', function (e) {
+                    tooltip.style.left = (e.pageX - tooltip.offsetWidth / 2) + 'px';
+                    tooltip.style.top = (e.pageY - 40) + 'px';
+                });
+            });
+
+            // Add scroll animations
+            const animateElements = document.querySelectorAll('.main-content h1, .main-content p, .who-text, .graffiti-text');
+
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '0';
+                        entry.target.style.transform = 'translateY(30px)';
+                        entry.target.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, 200);
+
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            animateElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+
+</html>
